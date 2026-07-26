@@ -127,7 +127,6 @@
 	background-size: 20px 20px !important;
 	background-position: center !important;
 	width: 30px !important;
-	filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3)) !important;
 }
 
 #addressBookButton {
@@ -136,7 +135,6 @@
 	background-size: 20px 20px !important;
 	background-position: center !important;
 	width: 30px !important;
-	filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3)) !important;
 }
 
 #calendarButton {
@@ -145,7 +143,6 @@
 	background-size: 16px 16px !important;
 	background-position: center !important;
 	width: 30px !important;
-	filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3)) !important;
 }
 
 #tasksButton {
@@ -154,7 +151,6 @@
 	background-size: 20px 20px !important;
 	background-position: center !important;
 	width: 30px !important;
-	filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3)) !important;
 }
 
 #chatButton {
@@ -163,7 +159,6 @@
 	background-size: 20px 20px !important;
 	background-position: center !important;
 	width: 30px !important;
-	filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3)) !important;
 }
 
 #settingsButton {
@@ -172,7 +167,6 @@
 	background-size: 20px 20px !important;
 	background-position: center !important;
 	width: 30px !important;
-	filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3)) !important;
 }
 
 /* Hide settings button label text */
