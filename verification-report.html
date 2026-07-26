@@ -24,5 +24,12 @@
 <tr><td>主题包</td><td class="ok">fork 完整主题复制到临时 Profile；CSS 静态断言确认六个选择器保留资源/尺寸/位置/宽度且无 drop-shadow。</td></tr>
 <tr><td>退出</td><td class="ok">隔离 Thunderbird 使用 TERM 请求正常退出，进程已结束；没有强杀。</td></tr>
 <tr><td>日志</td><td>主题启动成功；macOS 环境出现 GPU 子进程启动失败并回退软件 WebRender，以及 CoreData 警告。这些不是 CSS 解析错误，但限制了自动截图的视觉判定能力。</td></tr></table>
-<h2>真实 Profile 边界</h2><p class="note">截至本报告，真实 Profile 仅做了来源与哈希只读核对，尚未替换任何文件。真实 Thunderbird 正在运行；在替换和完整重启前必须先确认没有未保存的撰写窗口，并保留可恢复备份。不得强杀。</p>
+<h2>真实 Profile 切换</h2><table><tr><th>项目</th><th>结果</th></tr>
+<tr><td>切换前检查</td><td>真实 Thunderbird PID <code>98339</code> 正在运行；System Events 未发现可访问窗口，文件句柄未见 draft/compose/autosave 迹象。没有执行退出、重启或强杀。</td></tr>
+<tr><td>恢复备份</td><td><code>~/Library/Thunderbird/Profiles/d9r0rens.default-release/chrome/manual-theme-backups/fluentbird-20260726T164907Z-before-c861037</code>；原 CSS SHA-256 <code>59ca6e402392308f918f34a2c5b3ecfad543c2d412ae3a4f0f528c495769a164</code>。</td></tr>
+<tr><td>替换方式</td><td>在同一 <code>chrome/themes</code> 文件系统内准备完整 staging，验证无 symlink 且 CSS 只少六条投影声明，再通过目录 rename 替换；失败路径会恢复旧目录。</td></tr>
+<tr><td>当前主题</td><td class="ok"><code>chrome/themes/fluentbird/userChrome.css</code> SHA-256 为 <code>0632b028dd7d153dde4ca11f48e5eef335a546da1f9ddad5252b5050ba1ef424</code>，与 fork 修改版一致。</td></tr>
+<tr><td>入口</td><td class="ok"><code>chrome/userChrome.css</code> 仍为 <code>@import url("themes/fluentbird/userChrome.css")</code>，导入路径未改变。</td></tr>
+<tr><td>生效</td><td>真实 Thunderbird 未重启，因此磁盘替换已完成，但当前运行窗口需下次正常完整重启后加载新 CSS。</td></tr></table>
+<p class="note">真实 Profile 的改动严格限于 Fluentbird 主题目录及新增的手动备份目录。没有修改邮件、账号、通讯录或撰写内容；没有强制退出 Thunderbird。</p>
 </main></body></html>
