@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fluentbird 去除图标投影验证报告</title><style>:root{color-scheme:light;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#fff}body{margin:0;padding:40px 20px}main{max-width:960px;margin:auto}h1{margin:0 0 8px;font-size:32px}h2{margin-top:30px}p{color:#596579;line-height:1.6}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:24px 0}.card{padding:18px;border:1px solid #dce4f0;border-radius:14px;background:#fff}.value{font-size:25px;font-weight:750;color:#176b3a}table{width:100%;border-collapse:collapse}th,td{padding:12px;border:1px solid #dce4f0;text-align:left;vertical-align:top}th{background:#f3f6fa}code{background:#edf1f7;padding:2px 5px;border-radius:5px}.ok{color:#176b3a;font-weight:700}.note{padding:14px 16px;border:1px solid #d7e0ec;border-radius:12px;background:#f8fafc;color:#36445a}</style></head><body><main>
+<h1>Fluentbird 去除图标投影验证报告</h1>
+<p>报告日期：2026-07-26。目标是只移除 Thunderbird Spaces 工具栏六个彩色图标的 CSS 投影，不改变图标资源、尺寸、位置、颜色或交互状态。</p>
+<div class="summary"><div class="card"><div class="value">6</div><div>删除的 drop-shadow 声明</div></div><div class="card"><div class="value">1</div><div>修改文件</div></div><div class="card"><div class="value">0</div><div>剩余 CSS drop-shadow</div></div><div class="card"><div class="value">4121da8</div><div>fork commit</div></div></div>
+<h2>来源与身份</h2><table><tr><th>项目</th><th>证据</th></tr>
+<tr><td>上游</td><td><code>Deathbyteacup/fluentbird</code>，上游基线 <code>471eace530c469ed97c943b07927939e83cf8966</code>，MIT License。</td></tr>
+<tr><td>用户 fork</td><td><code>hangox/fluentbird</code>，GitHub fork 关系已核验。</td></tr>
+<tr><td>修改提交</td><td><code>4121da8730ab0598fb9c5c8f09dcc016ef97730c</code>，本地与 <code>origin/main</code> 一致。</td></tr>
+<tr><td>当前 Profile 来源核对</td><td>真实 Profile 中 Fluentbird 的 <code>userChrome.css</code> 修改前 SHA-256 为 <code>59ca6e402392308f918f34a2c5b3ecfad543c2d412ae3a4f0f528c495769a164</code>，与上游基线逐字节一致。</td></tr>
+<tr><td>修改后 CSS</td><td>SHA-256 <code>0632b028dd7d153dde4ca11f48e5eef335a546da1f9ddad5252b5050ba1ef424</code>。</td></tr></table>
+<h2>精确修改</h2><table><tr><th>选择器</th><th>保留</th><th>删除</th></tr>
+<tr><td><code>#mailButton</code></td><td>mail-col.svg、20×20、居中、宽30px</td><td>1px/1px/2px CSS drop-shadow</td></tr>
+<tr><td><code>#addressBookButton</code></td><td>contact-col.svg、20×20、居中、宽30px</td><td>同上</td></tr>
+<tr><td><code>#calendarButton</code></td><td>calendar-col.svg、16×16、居中、宽30px</td><td>同上</td></tr>
+<tr><td><code>#tasksButton</code></td><td>tasks-col.svg、20×20、居中、宽30px</td><td>同上</td></tr>
+<tr><td><code>#chatButton</code></td><td>chat-col.svg、20×20、居中、宽30px</td><td>同上</td></tr>
+<tr><td><code>#settingsButton</code></td><td>settings.svg、20×20、居中、宽30px</td><td>同上</td></tr></table>
+<p class="note">没有修改 SVG、图标色值、background-size、background-position、按钮宽度、hover 或 active 规则。calendar-col.svg 自身包含一个仅作用于日期圆点的 SVG 内部滤镜；本次按用户截图目标只删除按钮整体 CSS 投影，没有改变图标内部美术细节。</p>
+<h2>隔离 Profile 验证</h2><table><tr><th>项目</th><th>结果</th></tr>
+<tr><td>Profile</td><td><code>/private/tmp/fluentbird-isolated-profile.F7POOv</code>，全新临时 Profile，与真实 Profile 分离。</td></tr>
+<tr><td>Thunderbird</td><td>Mozilla Thunderbird 153.0，通过 <code>-no-remote -profile</code> 启动；进程文件句柄确认全部指向临时 Profile。</td></tr>
+<tr><td>userChrome 加载开关</td><td class="ok"><code>toolkit.legacyUserProfileCustomizations.stylesheets=true</code> 已进入临时 Profile 的 prefs.js。</td></tr>
+<tr><td>主题包</td><td class="ok">fork 完整主题复制到临时 Profile；CSS 静态断言确认六个选择器保留资源/尺寸/位置/宽度且无 drop-shadow。</td></tr>
+<tr><td>退出</td><td class="ok">隔离 Thunderbird 使用 TERM 请求正常退出，进程已结束；没有强杀。</td></tr>
+<tr><td>日志</td><td>主题启动成功；macOS 环境出现 GPU 子进程启动失败并回退软件 WebRender，以及 CoreData 警告。这些不是 CSS 解析错误，但限制了自动截图的视觉判定能力。</td></tr></table>
+<h2>真实 Profile 边界</h2><p class="note">截至本报告，真实 Profile 仅做了来源与哈希只读核对，尚未替换任何文件。真实 Thunderbird 正在运行；在替换和完整重启前必须先确认没有未保存的撰写窗口，并保留可恢复备份。不得强杀。</p>
+</main></body></html>
